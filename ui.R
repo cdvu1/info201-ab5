@@ -1,33 +1,72 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
+library(plotly)
 
-# Define UI for application that draws a histogram
-shinyUI(fluidPage(
+
+my.ui <- navbarPage(
   
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-  
-  # Sidebar with a slider input for number of bins 
-  sidebarLayout(
-    sidebarPanel(
-       sliderInput("bins",
-                   "Number of bins:",
-                   min = 1,
-                   max = 50,
-                   value = 30)
-    ),
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-       plotOutput("distPlot")
-    )
+  # Application Title
+  "Assignment 8", 
+  tabPanel("Home",
+           sidebarLayout(
+             sidebarPanel(
+               sliderInput("grams",
+                           "Minimum grams of sugar (g):",
+                           min = -2,
+                           max = 15,
+                           value = 0),
+               selectInput('colorvar', label = 'Variable to Color', choices = list("Manufacturer" = 'mfr', 'Type' = 'type'))
+             ),
+             mainPanel(
+               plotlyOutput('scatter')
+             )
+           )
+  ),
+  tabPanel("Map",
+           sidebarLayout(
+             sidebarPanel(
+               sliderInput("grams",
+                           "Minimum grams of sugar (g):",
+                           min = -2,
+                           max = 15,
+                           value = 0),
+               selectInput('colorvar', label = 'Variable to Color', choices = list("Manufacturer" = 'mfr', 'Type' = 'type'))
+             ),
+             mainPanel(
+               plotlyOutput('scatter')
+             )
+           )
+  ),
+  tabPanel("Race/Ethnicity in Washington",
+           sidebarLayout(
+             sidebarPanel(
+               sliderInput("grams",
+                           "Minimum grams of sugar (g):",
+                           min = -2,
+                           max = 15,
+                           value = 0),
+               selectInput('colorvar', label = 'Variable to Color', choices = list("Manufacturer" = 'mfr', 'Type' = 'type'))
+             ),
+             mainPanel(
+               plotlyOutput('scatter')
+             )
+           )
+  ),
+  tabPanel("Financial Data in Washington",
+           sidebarLayout(
+             sidebarPanel(
+               sliderInput("grams",
+                           "Minimum grams of sugar (g):",
+                           min = -2,
+                           max = 15,
+                           value = 0),
+               selectInput('colorvar', label = 'Variable to Color', choices = list("Manufacturer" = 'mfr', 'Type' = 'type'))
+             ),
+             mainPanel(
+               plotlyOutput('scatter')
+             )
+           )
   )
-))
+)
+
+shinyUI(my.ui)
+
