@@ -5,7 +5,7 @@ library(plotly)
 my.ui <- navbarPage(
   
   # Application Title
-  "Assignment 8", 
+  "College Data", 
   tabPanel("Home",
            sidebarLayout(
              sidebarPanel(
