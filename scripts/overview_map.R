@@ -8,9 +8,9 @@ setwd("~/Downloads/INFO201/info201-ab5")
 
 
 # the error that i get "No encoding supplied: defaulting to UTF-8."
-GetData <- function(input.school) {
+GetState <- function(input.state) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
-  query.params <- list(api_key = jodys.key, fields = "school.state")
+  query.params <- list(api_key = api.key, fields = "school.state")
   response <- GET(base.uri, query = query.params)
   content <- content(response, "text")
   body.data <- fromJSON(content) #extract and parse
@@ -38,5 +38,5 @@ GetData <- function(input.school) {
   return(state.data)
 }
 
-GetData("OR")
+school.states <- GetState("OR")
 
