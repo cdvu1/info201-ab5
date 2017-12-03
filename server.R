@@ -8,8 +8,9 @@
 #
 
 library(shiny)
-library(DT)
+# library(DT)
 source("scripts/financial.R")
+source("scripts/ethnicity.R")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
