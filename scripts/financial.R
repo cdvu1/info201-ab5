@@ -1,7 +1,4 @@
 #Financial data of schools in WA
-#Median Debt: 1730
-#Financial aid: line 777ish
-#Table (avg cost of attendance, avg family income, avg financial aid received, avg loans)
 
 library("httr")
 library("jsonlite")
@@ -42,7 +39,5 @@ GetData <- function(input.year) {
 
   return(state.data)
 }
-
-state.data <- GetData(2015)
 
 
