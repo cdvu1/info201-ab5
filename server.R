@@ -8,7 +8,6 @@
 #
 
 library(shiny)
-library(DT)
 source("scripts/financial.R")
 
 # Define server logic required to draw a histogram
@@ -25,7 +24,7 @@ shinyServer(function(input, output) {
     
   })
   
-  output$finTable <- renderDataTable(state.data)
+  output$finTable <- renderDataTable(GetData(input$year))
   
   # Rachel pie chart place holder
   output$scatter <- renderPlotly({

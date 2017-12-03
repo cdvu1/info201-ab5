@@ -1,6 +1,5 @@
 library(shiny)
 library(plotly)
-library(DT)
 
 
 my.ui <- navbarPage(
@@ -59,13 +58,15 @@ my.ui <- navbarPage(
        # Create a new Row in the UI for selectInputs
        fluidRow(
          sliderInput("year",
-                     "Financial data in the year:",
+                     "Financial data in the year",
                      min = 2000,
                      max = 2015,
-                     value = 2015)
+                     value = 2015,
+                     sep="")
        ),
        
        # Create a new row for the table.
+       
        fluidRow(
          dataTableOutput("finTable")
        )
