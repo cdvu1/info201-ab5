@@ -40,12 +40,12 @@ my.ui <- navbarPage(
   tabPanel("Race/Ethnicity in Washington",
            sidebarLayout(
              sidebarPanel(
+               selectInput('colorvar', label = 'Variable to Color', choices = list("Manufacturer" = 'mfr', 'Type' = 'type')),
                sliderInput("grams",
                            "Minimum grams of sugar (g):",
                            min = -2,
                            max = 15,
-                           value = 0),
-               selectInput('colorvar', label = 'Variable to Color', choices = list("Manufacturer" = 'mfr', 'Type' = 'type'))
+                           value = 0)
              ),
              mainPanel(
                plotlyOutput('scatter')
