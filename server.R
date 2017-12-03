@@ -26,4 +26,18 @@ shinyServer(function(input, output) {
   })
   
   output$finTable <- renderDataTable(state.data)
+  
+  # Rachel pie chart place holder
+  output$scatter <- renderPlotly({
+    chart.data <- cereal.data %>% 
+      filter(as.numeric(sugars) > as.numeric(input$grams))
+    
+    # Make chart
+    plot_ly(x = chart.data$sugars, 
+            y = as.numeric(chart.data$rating),
+            color = chart.data[,input$colorvar],
+            hoverinfo = "text", text = ~paste(chart.data$name, "<br /> Sugar (g):", chart.data$sugars, "<br /> Rating:", chart.data$rating),
+            type="scatter") %>% 
+      layout(title = 'Cereal Data', xaxis=list(title="Sugar (g)"), yaxis=list(title="Rating")) 
+  })
 })
