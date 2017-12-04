@@ -7,11 +7,6 @@ source("api_key.R")
 setwd("~/Downloads/INFO201/info201-ab5")
 
 
-
-# the error that i get "No encoding supplied: defaulting to UTF-8."
-GetState <- function(input.state) {
-  base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
-  query.params <- list(api_key = api.key, fields = "school.state")
 # get school names
 GetSchoolName <- function(input.school) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
@@ -25,7 +20,7 @@ GetSchoolName <- function(input.school) {
   items <- body.data$items
   is.data.frame(items)
   
-  state.data <- data.frame()
+  name.data <- data.frame()
   
   #get total number of pages by dividing total data and num of data per page
   all.pages <- trunc(body.data$metadata$total / body.data$metadata$per_page)
@@ -38,12 +33,11 @@ GetSchoolName <- function(input.school) {
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
     page.data <- flatten(body.data$results) 
-    state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    name.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
-  return(state.data)
+  return(name.data)
 }
 
-school.states <- GetState("OR")
 school.names <- GetSchoolName("OR")
 
 # get state
@@ -71,7 +65,7 @@ GetState <- function(input.state) {
     response <- GET(base.uri, query = query.params)
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
-    page.data <- f(body.data$results) 
+    page.data <- flatten(body.data$results) 
     state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
   return(state.data)
@@ -92,7 +86,7 @@ GetCity <- function(input.city) {
   items <- body.data$items
   is.data.frame(items)
   
-  state.data <- data.frame()
+  city.data <- data.frame()
   
   #get total number of pages by dividing total data and num of data per page
   all.pages <- trunc(body.data$metadata$total / body.data$metadata$per_page)
@@ -104,10 +98,10 @@ GetCity <- function(input.city) {
     response <- GET(base.uri, query = query.params)
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
-    page.data <- f(body.data$results) 
-    state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    page.data <- flatten(body.data$results) 
+    city.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
-  return(state.data)
+  return(city.data)
 }
 
 school.city <- GetCity("WA")
@@ -115,7 +109,7 @@ school.city <- GetCity("WA")
 # get lats of schools
 GetLat <- function(input.lat) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
-  query.params <- list(api_key = api.key, fields = "float.lat")
+  query.params <- list(api_key = api.key, fields = "location.lat")
   response <- GET(base.uri, query = query.params)
   content <- content(response, "text")
   body.data <- fromJSON(content) #extract and parse
@@ -125,30 +119,30 @@ GetLat <- function(input.lat) {
   items <- body.data$items
   is.data.frame(items)
   
-  state.data <- data.frame()
+  lat.data <- data.frame()
   
   #get total number of pages by dividing total data and num of data per page
   all.pages <- trunc(body.data$metadata$total / body.data$metadata$per_page)
   
   #for loop to each page and add that page's data into state.data
   for(p in 1:all.pages) {
-    query.params$fields <- "float.lat"
+    query.params$fields <- "location.lat"
     query.params$page <- p
     response <- GET(base.uri, query = query.params)
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
-    page.data <- f(body.data$results) 
-    state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    page.data <- flatten(body.data$results) 
+    lat.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
-  return(state.data)
+  return(lat.data)
 }
 
 school.lat <- GetLat("WA")
 
 # get longs of schools
-GetLong <- function(input.city) {
+GetLong <- function(input.lon) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
-  query.params <- list(api_key = api.key, fields = "float.long")
+  query.params <- list(api_key = api.key, fields = "location.lon")
   response <- GET(base.uri, query = query.params)
   content <- content(response, "text")
   body.data <- fromJSON(content) #extract and parse
@@ -158,22 +152,22 @@ GetLong <- function(input.city) {
   items <- body.data$items
   is.data.frame(items)
   
-  state.data <- data.frame()
+  lon.data <- data.frame()
   
   #get total number of pages by dividing total data and num of data per page
   all.pages <- trunc(body.data$metadata$total / body.data$metadata$per_page)
   
   #for loop to each page and add that page's data into state.data
   for(p in 1:all.pages) {
-    query.params$fields <- "float.long"
+    query.params$fields <- "location.lon"
     query.params$page <- p
     response <- GET(base.uri, query = query.params)
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
-    page.data <- f(body.data$results) 
-    state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    page.data <- flatten(body.data$results) 
+    lon.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
-  return(state.data)
+  return(lon.data)
 }
 
 school.long <- GetLong("WA")
@@ -191,7 +185,7 @@ GetAdmissionsRate <- function(input.state) {
   items <- body.data$items
   is.data.frame(items)
   
-  state.data <- data.frame()
+  adm.data <- data.frame()
   
   #get total number of pages by dividing total data and num of data per page
   all.pages <- trunc(body.data$metadata$total / body.data$metadata$per_page)
@@ -203,18 +197,18 @@ GetAdmissionsRate <- function(input.state) {
     response <- GET(base.uri, query = query.params)
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
-    page.data <- f(body.data$results) 
-    state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    page.data <- flatten(body.data$results) 
+    adm.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
-  return(state.data)
+  return(adm.data)
 }
 
 school.admissions <- GetAdmissionsRate("WA")
 
-# get number of bachelors of library sciences at schools
+# get number of bachelors of library sciences at schools (lines 422)
 GetBachLib <- function(input.state) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
-  query.params <- list(api_key = api.key, fields = "academics.program.bachelors.library")
+  query.params <- list(api_key = api.key, fields = "2015.academics.program.bachelors.library")
   response <- GET(base.uri, query = query.params)
   content <- content(response, "text")
   body.data <- fromJSON(content) #extract and parse
@@ -224,30 +218,30 @@ GetBachLib <- function(input.state) {
   items <- body.data$items
   is.data.frame(items)
   
-  state.data <- data.frame()
+  bach.data <- data.frame()
   
   #get total number of pages by dividing total data and num of data per page
   all.pages <- trunc(body.data$metadata$total / body.data$metadata$per_page)
   
   #for loop to each page and add that page's data into state.data
   for(p in 1:all.pages) {
-    query.params$fields <- "academics.program.bachelors.library"
+    query.params$fields <- "2015.academics.program.bachelors.library"
     query.params$page <- p
     response <- GET(base.uri, query = query.params)
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
-    page.data <- f(body.data$results) 
-    state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    page.data <- flatten(body.data$results) 
+    bach.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
-  return(state.data)
+  return(bach.data)
 }
 
 school.bachelors <- GetBachLib("WA")
 
-# get percent of first generation students
+# get percent of first generation students (line 1643)
 GetFirstGen <- function(input.state) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
-  query.params <- list(api_key = api.key, fields = "student.share_firstgeneration")
+  query.params <- list(api_key = api.key, fields = "2015.student.share_firstgeneration")
   response <- GET(base.uri, query = query.params)
   content <- content(response, "text")
   body.data <- fromJSON(content) #extract and parse
@@ -257,22 +251,22 @@ GetFirstGen <- function(input.state) {
   items <- body.data$items
   is.data.frame(items)
   
-  state.data <- data.frame()
+  gen.data <- data.frame()
   
   #get total number of pages by dividing total data and num of data per page
   all.pages <- trunc(body.data$metadata$total / body.data$metadata$per_page)
   
   #for loop to each page and add that page's data into state.data
   for(p in 1:all.pages) {
-    query.params$fields <- "student.share_firstgeneration"
+    query.params$fields <- "2015.student.share_firstgeneration"
     query.params$page <- p
     response <- GET(base.uri, query = query.params)
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
-    page.data <- f(body.data$results) 
-    state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    page.data <- flatten(body.data$results) 
+    gen.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
-  return(state.data)
+  return(gen.data)
 }
 
 school.firstgen <- GetFirstGen("WA")
