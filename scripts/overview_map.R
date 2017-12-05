@@ -2,13 +2,15 @@ library(jsonlite)
 library(httr)
 library(dplyr)
 source("api_key.R")
+library(reshape)
+library(reshape2)
 
 #Jody's working directory
 setwd("~/Downloads/INFO201/info201-ab5")
 
 
 # get school names
-GetSchoolName <- function(input.school) {
+GetSchoolName <- function(input.state) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
   query.params <- list(api_key = api.key, fields = "school.name")
   response <- GET(base.uri, query = query.params)
@@ -20,7 +22,7 @@ GetSchoolName <- function(input.school) {
   items <- body.data$items
   is.data.frame(items)
   
-  name.data <- data.frame()
+  state.data <- data.frame()
   
   #get total number of pages by dividing total data and num of data per page
   all.pages <- trunc(body.data$metadata$total / body.data$metadata$per_page)
@@ -33,12 +35,10 @@ GetSchoolName <- function(input.school) {
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
     page.data <- flatten(body.data$results) 
-    name.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
-  return(name.data)
+  return(state.data)
 }
-
-school.names <- GetSchoolName("OR")
 
 # get state
 GetState <- function(input.state) {
@@ -71,10 +71,8 @@ GetState <- function(input.state) {
   return(state.data)
 }
 
-school.state <- GetState("OR")
-
 # get cities of schools
-GetCity <- function(input.city) {
+GetCity <- function(input.state) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
   query.params <- list(api_key = api.key, fields = "school.city")
   response <- GET(base.uri, query = query.params)
@@ -99,15 +97,13 @@ GetCity <- function(input.city) {
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
     page.data <- flatten(body.data$results) 
-    city.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    city.data <- rbind(city.data, page.data) #merging the current state data with the current page data
   }
   return(city.data)
 }
 
-school.city <- GetCity("WA")
-
 # get lats of schools
-GetLat <- function(input.lat) {
+GetLat <- function(input.state) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
   query.params <- list(api_key = api.key, fields = "location.lat")
   response <- GET(base.uri, query = query.params)
@@ -132,15 +128,13 @@ GetLat <- function(input.lat) {
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
     page.data <- flatten(body.data$results) 
-    lat.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    lat.data <- rbind(lat.data, page.data) #merging the current state data with the current page data
   }
   return(lat.data)
 }
 
-school.lat <- GetLat("WA")
-
 # get longs of schools
-GetLong <- function(input.lon) {
+GetLong <- function(input.state) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
   query.params <- list(api_key = api.key, fields = "location.lon")
   response <- GET(base.uri, query = query.params)
@@ -165,12 +159,10 @@ GetLong <- function(input.lon) {
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
     page.data <- flatten(body.data$results) 
-    lon.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    lon.data <- rbind(lon.data, page.data) #merging the current state data with the current page data
   }
   return(lon.data)
 }
-
-school.long <- GetLong("WA")
 
 # get admission rates of schools
 GetAdmissionsRate <- function(input.state) {
@@ -198,12 +190,10 @@ GetAdmissionsRate <- function(input.state) {
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
     page.data <- flatten(body.data$results) 
-    adm.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    adm.data <- rbind(adm.data, page.data) #merging the current state data with the current page data
   }
   return(adm.data)
 }
-
-school.admissions <- GetAdmissionsRate("WA")
 
 # get number of bachelors of library sciences at schools (lines 422)
 GetBachLib <- function(input.state) {
@@ -231,12 +221,10 @@ GetBachLib <- function(input.state) {
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
     page.data <- flatten(body.data$results) 
-    bach.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    bach.data <- rbind(bach.data, page.data) #merging the current state data with the current page data
   }
   return(bach.data)
 }
-
-school.bachelors <- GetBachLib("WA")
 
 # get percent of first generation students (line 1643)
 GetFirstGen <- function(input.state) {
@@ -264,9 +252,29 @@ GetFirstGen <- function(input.state) {
     content <- content(response, "text")
     body.data <- fromJSON(content) #extract and parse
     page.data <- flatten(body.data$results) 
-    gen.data <- rbind(state.data, page.data) #merging the current state data with the current page data
+    gen.data <- rbind(gen.data, page.data) #merging the current state data with the current page data
   }
   return(gen.data)
 }
 
+# getting all of the data
+school.names <- GetSchoolName("OR")
+school.state <- GetState("OR")
+school.city <- GetCity("WA")
+school.lat <- GetLat("WA")
+school.long <- GetLong("WA")
+school.admissions <- GetAdmissionsRate("WA")
+school.bachelors <- GetBachLib("WA")
 school.firstgen <- GetFirstGen("WA")
+
+# by=c("School", "State", "City", "Latitiude", "Longitude", "Admissions Rate",
+# "Bachelors in Library Sciences", "Percentage of First-Gens")
+# merging the datas into one
+all.df <- list(school.names, school.state, school.city, school.lat, school.long,
+                           school.admissions, school.bachelors, school.firstgen)
+merged.df <- merge_all(all.df)
+
+
+
+
+
