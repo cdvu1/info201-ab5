@@ -1,5 +1,9 @@
 library(shiny)
 library(plotly)
+<<<<<<< HEAD
+# library(DT)
+=======
+>>>>>>> cfbe7cf782e5ff35b153f816ad0ace20cc63f45b
 
 
 my.ui <- navbarPage(
@@ -39,12 +43,12 @@ my.ui <- navbarPage(
   tabPanel("Race/Ethnicity in Washington",
            sidebarLayout(
              sidebarPanel(
-               selectInput('colorvar', label = 'Variable to Color', choices = list("Manufacturer" = 'mfr', 'Type' = 'type')),
+               selectInput('colorvar', label = 'State', choices = list("Manufacturer" = 'mfr', 'Type' = 'type')),
                sliderInput("grams",
-                           "Minimum grams of sugar (g):",
-                           min = -2,
-                           max = 15,
-                           value = 0)
+                           "Year",
+                           min = 2000,
+                           max = 2015,
+                           value = 0, sep="")
              ),
              mainPanel(
                # plotlyOutput('scatter')
