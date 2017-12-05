@@ -36,8 +36,9 @@ GetData <- function(input.year) {
     page.data <- flatten(body.data$results) 
     state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
-
   return(state.data)
 }
+
+
 
 
