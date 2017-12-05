@@ -44,3 +44,6 @@ GetData <- function(input.year) {
   }
   return(state.data)
 }
+
+state.data <- GetData(2015)
+
