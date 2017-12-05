@@ -3,7 +3,7 @@
 library("httr")
 library("jsonlite")
 library("dplyr")
-setwd("~/Documents/FALL17/201/test-final")
+#setwd("~/Documents/FALL17/201/test-final")
 source('api_key.R')
 
 #vt0a8p2WPxbldiZD4QipQNjFsCLAQH2ZA5USPUQd
@@ -36,6 +36,7 @@ GetData <- function(input.year) {
     page.data <- flatten(body.data$results) 
     state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
+  #state.data <- state.data[,c("school.name", )]
   return(state.data)
 }
 

@@ -8,33 +8,14 @@
 #
 
 library(shiny)
-<<<<<<< HEAD
 source("./scripts/financial.R")
-test.data <- GetData("2015")
-=======
-<<<<<<< HEAD
-# library(DT)
-=======
->>>>>>> cfbe7cf782e5ff35b153f816ad0ace20cc63f45b
-source("scripts/financial.R")
-source("scripts/ethnicity.R")
+#source("./scripts/ethnicity.R")
 
->>>>>>> c73305cfc917627e641a3d6092ca2b79cd2b851b
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-   
-  output$distPlot <- renderPlot({
-    
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2] 
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    
-  })
   
-  output$finTable <- renderDataTable(test.data)
+  #Financial Data Table
+  output$finTable <- renderDataTable(GetData(input$year))
   
   # Rachel pie chart place holder
   output$scatter <- renderPlotly({

@@ -1,11 +1,7 @@
 library(shiny)
 library(plotly)
-<<<<<<< HEAD
-# library(DT)
-=======
->>>>>>> cfbe7cf782e5ff35b153f816ad0ace20cc63f45b
-
-
+source("./scripts/ethnicity.R")
+source("./scripts/financial.R")
 my.ui <- navbarPage(
   
   # Application Title

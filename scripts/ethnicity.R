@@ -1,7 +1,7 @@
 library(jsonlite)
 library(dplyr)
 library(httr)
-setwd("~/INFO201/info201-ab5")
+#setwd("~/INFO201/info201-ab5")
 source('api_key.R')
 
 # Ethnicity Pie Chart for Schools in WA State
@@ -45,5 +45,5 @@ GetData <- function(input.year) {
   return(state.data)
 }
 
-state.data <- GetData(2015)
+#state.data <- GetData(2015)
 
