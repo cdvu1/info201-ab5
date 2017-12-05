@@ -8,7 +8,10 @@
 #
 
 library(shiny)
+<<<<<<< HEAD
 # library(DT)
+=======
+>>>>>>> cfbe7cf782e5ff35b153f816ad0ace20cc63f45b
 source("scripts/financial.R")
 source("scripts/ethnicity.R")
 
@@ -26,7 +29,7 @@ shinyServer(function(input, output) {
     
   })
   
-  output$finTable <- renderDataTable(state.data)
+  output$finTable <- renderDataTable(GetData(input$year))
   
   # Rachel pie chart place holder
   output$scatter <- renderPlotly({
