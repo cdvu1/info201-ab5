@@ -27,9 +27,9 @@ shinyServer(function(input, output) {
     subunitwidth = 0.5
     )
   
-  plot.interactive.map <- plot_geo(overview.data, lat = ~lat, lon = ~lng) %>%
+  plot.interactive.map <- plot_geo(school.info, lat = ~location.lat, lon = ~location.lng) %>%
     add_markers(
-      text = ~paste(date, paste('School Name:', name), paste('City:', city), paste('State:', state), paste('Injured:', injured), paste('Casualties:', casualties), sep = "<br />"),
+      text = ~paste(date, paste('School Name:', school.name), paste('City:', school.city), paste('State:', school.state), paste('Injured:', injured), paste('Casualties:', casualties), sep = "<br />"),
       color = ~acceptancerate, symbol = I("square"), size = I(6), hoverinfo = "text"
     ) %>%
     colorbar(title = "Acceptance Rate") %>%
