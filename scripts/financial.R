@@ -24,8 +24,7 @@ GetData <- function(input.year) {
   #for loop to each page and add that page's data into state.data
   for(p in 1:total.pages) {
     tuition <- paste0(input.year, ".cost.tuition.in_state,", input.year, ".cost.tuition.out_of_state")
-    debt <- paste0(input.year, ".aid.median_debt.pell_grant,", 
-                   input.year, ".aid.median_debt.income.0_30000,", 
+    debt <- paste0(input.year, ".aid.median_debt.income.0_30000,", 
                    input.year, ".aid.median_debt.income.30001_75000,",
                    input.year, ".aid.median_debt.income.greater_than_75000")
     query.params$fields <- paste("school.name", tuition, debt, sep=",")
@@ -36,7 +35,31 @@ GetData <- function(input.year) {
     page.data <- flatten(body.data$results) 
     state.data <- rbind(state.data, page.data) #merging the current state data with the current page data
   }
-  #state.data <- state.data[,c("school.name", )]
+  state.data <- state.data[,c("school.name", 
+                              paste0(input.year, ".cost.tuition.in_state"),
+                              paste0(input.year, ".cost.tuition.out_of_state"),
+                              paste0(input.year, ".aid.median_debt.income.0_30000"),
+                              paste0(input.year, ".aid.median_debt.income.30001_75000"),
+                              paste0(input.year, ".aid.median_debt.income.greater_than_75000"))]
+  names(state.data) <- c("school.name",
+                         "tuition.in",
+                         "tuition.out",
+                         "debt.low",
+                         "debt.med",
+                         "debt.high")
+  state.data <- state.data %>% mutate(tuition.in = ifelse(is.na(tuition.in), "Not Available", tuition.in))
+  state.data <- state.data %>% mutate(tuition.out = ifelse(is.na(tuition.out), "Not Available", tuition.out))
+  state.data <- state.data %>% mutate(debt.low = ifelse(is.na(debt.low), "Not Available", debt.low))
+  state.data <- state.data %>% mutate(debt.med = ifelse(is.na(debt.med), "Not Available", debt.med))
+  state.data <- state.data %>% mutate(debt.high = ifelse(is.na(debt.high), "Not Available", debt.high))
+  
+  names(state.data) <- c("School Name",
+                         "In-State Tuition",
+                         "Out-of-State Tuition",
+                         "Median Debt (Low Income Students)",
+                         "Median Debt (Middle Income Students)",
+                         "Median Debt (High Income Students)")
+  
   return(state.data)
 }
 
