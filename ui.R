@@ -39,18 +39,20 @@ my.ui <- navbarPage(
   tabPanel("Race/Ethnicity in Washington",
            sidebarLayout(
              sidebarPanel(
-               selectInput('colorvar', label = 'State', choices = list("Manufacturer" = 'mfr', 'Type' = 'type')),
-               sliderInput("grams",
+               selectInput('school', label = 'School:', choices=state.data[,6]),
+               sliderInput("year",
                            "Year",
                            min = 2000,
                            max = 2015,
-                           value = 0, sep="")
+                           value = 2015,
+                           sep="")
              ),
              mainPanel(
-               # plotlyOutput('scatter')
+               plotlyOutput('piechart')
              )
            )
   ),
+  
   tabPanel("Financial Data in Washington",
      fluidPage(
        titlePanel("Financial Data"),

@@ -1,16 +1,10 @@
-#
-# This is the server logic of a Shiny web application. You can run the 
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 library(plotly)
+library(dplyr)
+library(RColorBrewer)
+
 source("./scripts/financial.R")
-#source("./scripts/ethnicity.R")
+source("./scripts/ethnicity.R")
 #source("./scripts/overview_map.R")
 
 # Define server logic required to draw a histogram
@@ -19,7 +13,7 @@ shinyServer(function(input, output) {
   #Financial Data Table
   output$finTable <- renderDataTable(GetData(input$year))
   
-  #Map of Schools.
+  #Map of Schools
   output$map <- renderPlotly {(
     
   g <- list(
@@ -45,17 +39,17 @@ shinyServer(function(input, output) {
   
   )}
   
-  # Rachel pie chart place holder
-  output$scatter <- renderPlotly({
-    chart.data <- cereal.data %>% 
-      filter(as.numeric(sugars) > as.numeric(input$grams))
+  output$piechart <- renderPlotly({
+    pie.data <- GetData(input$year) %>%
+      filter(school.name == input$school)
+    row.list <- unname(unlist(pie.data[1,]))
+    data.frame(t(row.list))
     
     # Make chart
-    plot_ly(x = chart.data$sugars, 
-            y = as.numeric(chart.data$rating),
-            color = chart.data[,input$colorvar],
-            hoverinfo = "text", text = ~paste(chart.data$name, "<br /> Sugar (g):", chart.data$sugars, "<br /> Rating:", chart.data$rating),
-            type="scatter") %>% 
-      layout(title = 'Cereal Data', xaxis=list(title="Sugar (g)"), yaxis=list(title="Rating")) 
+    plot_ly(pie.data, labels = ~colnames(pie.data), values = ~row.list, type = 'pie',
+            marker = list(colors = colorRampPalette(brewer.pal(12, "Set3"))(100))) %>%
+      layout(title = "Percentages by Race",  showlegend = F,
+             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE)) 
   })
 })
