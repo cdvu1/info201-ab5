@@ -11,12 +11,6 @@ GetData <- function(input.year) {
   response <- GET(base.uri, query = query.params)
   content <- content(response, "text")
   body.data <- fromJSON(content) #extract and parse
-  
-  str(body.data)
-  names(body.data)
-  items <- body.data$items
-  is.data.frame(items)
-  
   school.data <- data.frame()
   
   #get total number of pages by dividing total data and num of data per page
@@ -24,10 +18,11 @@ GetData <- function(input.year) {
   
   #for loop to each page and add that page's data into state.data
   for(p in 1:all.pages) {
-    school.data <- paste0(input.year, ".admissions.admission_rate.overall",
-                          input.year, ".academics.program.bachelors.library",
-                          input.year, ".student.share_firstgeneration")
-    query.params$fields <- paste("school.name,school.state,school.city,location.lat,location.lon", school.data, seq=",")
+    all.data <- paste0("school.name,school.state,school.city,location.lat,location.lon,", 
+                       input.year, ".admissions.admission_rate.overall,",
+                       input.year, ".academics.program.bachelors.library,",
+                       input.year, ".student.share_firstgeneration")
+    query.params$fields <- paste(all.data)
     query.params$page <- p
     response <- GET(base.uri, query = query.params)
     content <- content(response, "text")
@@ -38,6 +33,5 @@ GetData <- function(input.year) {
   return(school.data)
 }
 
-GetData("WA")
-
-
+school.info <- GetData("2015")
+View(school.info)
