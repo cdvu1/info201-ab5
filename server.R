@@ -15,7 +15,7 @@ shinyServer(function(input, output) {
   
     #Map of Schools
    output$map <- renderPlotly ({
-     map.data <- map.data %>%
+     map.data <- saved.data %>%
        filter(as.numeric(admissions) <= as.numeric(input$admissions))
      
      g <- list(

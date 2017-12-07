@@ -3,7 +3,7 @@ library(httr)
 library(dplyr)
 
 # https://api.data.gov/ed/collegescorecard/v1/schools?api_key=fDjxnzknPKeKvMcOlzCAb6aK3IhayEClNrqG4zxF&fields=school.name,school.state,school.city,location.lat,location.lon,2015.admissions.admission_rate.overall,2015.academics.program.bachelors.library,2015.student.share_firstgeneration&sort=school.name
-jody.key <- "uouIjx1yZKGc8rnMS55fVmL1qD11jeydjNz5QHKi"
+jody.key <- "NhSJQDpqjDH5bevmH22uK9dfzpvJeqRoBYArde7D"
 
 GetData <- function(input.year) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
@@ -41,4 +41,4 @@ school.info <- school.info %>%
 colnames(school.info) <- c("lat", "long", "name", "library", "state", "city", "firstgen", "admissions") 
 
 write.csv(school.info, file = 'map.data.csv')
-map.data <- read.csv('map.data.csv')
+saved.data <- read.csv('map.data.csv')
