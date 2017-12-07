@@ -30,15 +30,15 @@ my.ui <- navbarPage(
   tabPanel("Map",
            sidebarLayout(
              sidebarPanel(
-               sliderInput("grams",
-                           "Minimum grams of sugar (g):",
-                           min = -2,
-                           max = 15,
-                           value = 0),
-               selectInput('colorvar', label = 'Variable to Color', choices = list("Manufacturer" = 'mfr', 'Type' = 'type'))
+               sliderInput("percent",
+                           "Addmissions Rate of Universities",
+                           min = 0,
+                           max = 100,
+                           value = 100,
+                           sep = "")
              ),
              mainPanel(
-               # plotlyOutput('scatter')
+              plotlyOutput('map')
              )
            )
   ),
