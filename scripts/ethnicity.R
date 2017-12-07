@@ -48,3 +48,4 @@ GetRaceData <- function(input.year) {
 state.data <- GetRaceData(2015)
 sort.state.data <- arrange(state.data, school.name)
 
+

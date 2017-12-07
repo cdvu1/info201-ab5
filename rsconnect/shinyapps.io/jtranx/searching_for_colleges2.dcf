@@ -1,0 +1,12 @@
+name: searching_for_colleges2
+title: Searching For Colleges
+username:
+account: jtranx
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 245564
+bundleId: 1120296
+url: https://jtranx.shinyapps.io/searching_for_colleges2/
+when: 1512625684.08071
+asMultiple: FALSE
+asStatic: FALSE

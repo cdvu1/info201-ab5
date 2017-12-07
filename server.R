@@ -15,8 +15,8 @@ shinyServer(function(input, output) {
   
     #Map of Schools
    output$map <- renderPlotly ({
-     map.data <- school.info %>%
-       filter(as.numeric(admissions) > as.numeric(input$percent))
+     map.data <- map.data %>%
+       filter(as.numeric(admissions) <= as.numeric(input$admissions))
      
      g <- list(
        scope = 'usa',
@@ -29,7 +29,7 @@ shinyServer(function(input, output) {
        subunitwidth = 0.5
        )
      
-     plot.interactive.map <- plot_geo(school.info, lat = ~lat, lon = ~long) %>%
+     plot.interactive.map <- plot_geo(map.data, lat = ~lat, lon = ~long) %>%
        add_markers(
          text = ~paste(paste('School Name:', name), paste('City:', city), paste('Acceptance Rate:', admissions), paste('First Generation Student Percentage:', firstgen), sep = "<br />"),
          color = ~admissions, symbol = I("square"), size = I(4), hoverinfo = "text"

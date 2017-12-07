@@ -31,7 +31,7 @@ my.ui <- navbarPage(
   tabPanel("Map",
            sidebarLayout(
              sidebarPanel(
-               sliderInput("percent",
+               sliderInput("admissions",
                            "Admissions Rate of Universities",
                            min = 0,
                            max = 100,
