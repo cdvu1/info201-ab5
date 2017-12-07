@@ -7,7 +7,7 @@ library("dplyr")
 #https://api.data.gov/signup/
 #https://api.data.gov/ed/collegescorecard/v1/schools?api_key=vt0a8p2WPxbldiZD4QipQNjFsCLAQH2ZA5USPUQd&fields=school.name,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state,2015.student.demographics.avg_family_income_log&school.state=WA
 
-api.key.cece <- "aDmLJNIxppgZ4FYzajfONAUTDllDBE85a1y7fTCR"
+api.key.cece <- "hY6vf0S3dnujbfZmkDEROMhXa7QMtWx1TqvTF4Ms"
 
 GetFinData <- function(input.year) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'

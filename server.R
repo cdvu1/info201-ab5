@@ -5,7 +5,6 @@ library(RColorBrewer)
 
 source("./scripts/financial.R")
 source("./scripts/ethnicity.R")
-source("./scripts/overview_map.R")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -15,6 +14,8 @@ shinyServer(function(input, output) {
   
     #Map of Schools
    output$map <- renderPlotly ({
+   saved.data <- read.csv('map.data.csv')
+     
      map.data <- saved.data %>%
        filter(as.numeric(admissions) <= as.numeric(input$admissions))
      

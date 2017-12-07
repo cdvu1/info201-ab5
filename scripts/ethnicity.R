@@ -6,7 +6,7 @@ library(jsonlite)
 library(dplyr)
 library(httr)
 
-rachel.key <- 'NqLUDcmQG7lM8TniJ3h9ZRmF9bdxp2iKunRVruiN'
+rachel.key <- 'IHyaPHYPGKTSW4GvQaRShuFSrC1Jgcvf0zQgjnDL'
 
 GetRaceData <- function(input.year) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'

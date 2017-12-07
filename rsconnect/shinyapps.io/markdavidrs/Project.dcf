@@ -1,0 +1,12 @@
+name: Project
+title:
+username:
+account: markdavidrs
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 245591
+bundleId: 1120725
+url: https://markdavidrs.shinyapps.io/Project/
+when: 1512640032.46863
+asMultiple: FALSE
+asStatic: FALSE

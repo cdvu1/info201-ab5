@@ -1,0 +1,12 @@
+name: ab5final
+title: ab5final
+username:
+account: markdavidrs
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 245724
+bundleId: 1120703
+url: https://markdavidrs.shinyapps.io/ab5final/
+when: 1512638982.06787
+asMultiple: FALSE
+asStatic: FALSE
