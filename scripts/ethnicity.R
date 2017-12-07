@@ -1,10 +1,10 @@
-library(jsonlite)
-library(dplyr)
-library(httr)
-
 # Ethnicity Pie Chart for Schools in WA State
 # 546-552
 # Widgets: school drop-down, year slider
+
+library(jsonlite)
+library(dplyr)
+library(httr)
 
 rachel.key <- 'NqLUDcmQG7lM8TniJ3h9ZRmF9bdxp2iKunRVruiN'
 
@@ -45,6 +45,7 @@ GetRaceData <- function(input.year) {
   return(state.data)
 }
 
+# Reference data frame for list of schools in selectInput widget on Race/Ethnicity tab
 state.data <- GetRaceData(2015)
 sort.state.data <- arrange(state.data, school.name)
 
