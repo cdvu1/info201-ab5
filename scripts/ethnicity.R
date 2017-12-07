@@ -45,5 +45,5 @@ GetRaceData <- function(input.year) {
   return(state.data)
 }
 
-state.data <- GetData(2015)
+state.data <- GetRaceData(2015)
 
