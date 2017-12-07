@@ -62,6 +62,7 @@ GetFinData <- function(input.year) {
   return(state.data)
 }
 
+fin.data <- GetFinData(2015)
 
 
 
