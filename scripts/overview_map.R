@@ -35,10 +35,7 @@ GetData <- function(input.year) {
 }
 
 school.info <- GetData("2015")
-<<<<<<< HEAD
-=======
 
 school.info <- school.info %>% 
                 mutate(`2015.student.share_firstgeneration` = `2015.student.share_firstgeneration` * 100,
                        `2015.admissions.admission_rate.overall` = `2015.admissions.admission_rate.overall` * 100)
->>>>>>> abf5f6e5907b1ad2a3873de2f59a78998faebd10
