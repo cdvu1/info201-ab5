@@ -4,15 +4,15 @@ library("httr")
 library("jsonlite")
 library("dplyr")
 #setwd("~/Documents/FALL17/201/test-final")
-source('api_key.R')
 
-#vt0a8p2WPxbldiZD4QipQNjFsCLAQH2ZA5USPUQd
+#https://api.data.gov/signup/
 #https://api.data.gov/ed/collegescorecard/v1/schools?api_key=vt0a8p2WPxbldiZD4QipQNjFsCLAQH2ZA5USPUQd&fields=school.name,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state,2015.student.demographics.avg_family_income_log&school.state=WA
 
+api.key.cece <- "aDmLJNIxppgZ4FYzajfONAUTDllDBE85a1y7fTCR"
 
 GetFinData <- function(input.year) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
-  query.params <- list(api_key = api.key, fields = "school.name", school.state = "WA")
+  query.params <- list(api_key = api.key.cece, fields = "school.name", school.state = "WA")
   response <- GET(base.uri, query = query.params)
   content <- content(response, "text")
   body.data <- fromJSON(content) #extract and parse
