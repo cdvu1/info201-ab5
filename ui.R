@@ -1,7 +1,9 @@
 library(shiny)
 library(plotly)
+
 source("./scripts/ethnicity.R")
 source("./scripts/financial.R")
+
 my.ui <- navbarPage(
   
   # Application Title
