@@ -4,10 +4,11 @@ library(dplyr)
 source("api_key.R")
 
 # https://api.data.gov/ed/collegescorecard/v1/schools?api_key=fDjxnzknPKeKvMcOlzCAb6aK3IhayEClNrqG4zxF&fields=school.name,school.state,school.city,location.lat,location.lon,2015.admissions.admission_rate.overall,2015.academics.program.bachelors.library,2015.student.share_firstgeneration&sort=school.name
+jody.key <- "HqfDWgERNoKwmlplx31XyuKy3wW4w8P6BHBHbwe4"
 
 GetData <- function(input.year) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
-  query.params <- list(api_key = api.key, fields = "school.name,school.state,school.city,location.lat,location.lon")
+  query.params <- list(api_key = jody.key, fields = "school.name,school.state,school.city,location.lat,location.lon")
   response <- GET(base.uri, query = query.params)
   content <- content(response, "text")
   body.data <- fromJSON(content) #extract and parse
@@ -34,4 +35,3 @@ GetData <- function(input.year) {
 }
 
 school.info <- GetData("2015")
-View(school.info)
