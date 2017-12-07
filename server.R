@@ -5,7 +5,7 @@ library(RColorBrewer)
 
 source("./scripts/financial.R")
 source("./scripts/ethnicity.R")
-#source("./scripts/overview_map.R")
+source("./scripts/overview_map.R")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -15,6 +15,8 @@ shinyServer(function(input, output) {
   
     #Map of Schools
    output$map <- renderPlotly ({
+     map.data <- school.info %>%
+       filter(as.numeric(admissions) > as.numeric(input$percent))
      
      g <- list(
        scope = 'usa',
@@ -27,10 +29,10 @@ shinyServer(function(input, output) {
        subunitwidth = 0.5
        )
      
-     plot.interactive.map <- plot_geo(school.info, lat = ~location.lat, lon = ~location.lon) %>%
+     plot.interactive.map <- plot_geo(school.info, lat = ~lat, lon = ~long) %>%
        add_markers(
-         text = ~paste(paste('School Name:', school.name), paste('City:', school.city), paste('Acceptance Rate:', 2015.admissions_rate.overall), paste('First Generation Student Percentage:', 2015.student.share_firstgeneration), sep = "<br />"),
-         color = ~2015.student.share_firstgeneration, symbol = I("square"), size = I(4), hoverinfo = "text"
+         text = ~paste(paste('School Name:', name), paste('City:', city), paste('Acceptance Rate:', admissions), paste('First Generation Student Percentage:', firstgen), sep = "<br />"),
+         color = ~admissions, symbol = I("square"), size = I(4), hoverinfo = "text"
        ) %>%
        colorbar(title = "Acceptance Rate") %>%
        layout(

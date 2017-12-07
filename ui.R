@@ -3,7 +3,7 @@ library(plotly)
 
 source("./scripts/ethnicity.R")
 source("./scripts/financial.R")
-#source("./scripts/overview_map.R")
+source("./scripts/overview_map.R")
 my.ui <- navbarPage(
   
   # Application Title
@@ -27,11 +27,12 @@ my.ui <- navbarPage(
         a("College Scorecard Link", href="https://collegescorecard.ed.gov/data/documentation/")
       )
   ),
+  
   tabPanel("Map",
            sidebarLayout(
              sidebarPanel(
                sliderInput("percent",
-                           "Addmissions Rate of Universities",
+                           "Admissions Rate of Universities",
                            min = 0,
                            max = 100,
                            value = 100,
@@ -42,6 +43,7 @@ my.ui <- navbarPage(
              )
            )
   ),
+  
   tabPanel("Race/Ethnicity in Washington",
     titlePanel("Race/Ethnicity Data"),
            sidebarLayout(
@@ -84,7 +86,7 @@ my.ui <- navbarPage(
   tabPanel("Contact Us",
     mainPanel(
       h1("Project Creators"),
-      br(),
+      hr(),
       a("• Cecilia Vu", href="cdvu@uw.edu"),
       br(),
       a("• Jody Tran", href="jtranx@uw.edu"),
