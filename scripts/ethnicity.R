@@ -2,15 +2,15 @@ library(jsonlite)
 library(dplyr)
 library(httr)
 
-source('api_key.R')
-
 # Ethnicity Pie Chart for Schools in WA State
 # 546-552
 # Widgets: school drop-down, year slider
 
+rachel.key <- 'NqLUDcmQG7lM8TniJ3h9ZRmF9bdxp2iKunRVruiN'
+
 GetRaceData <- function(input.year) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
-  query.params <- list(api_key = api.key, fields = "school.name", school.state = "WA")
+  query.params <- list(api_key = rachel.key, fields = "school.name", school.state = "WA")
   response <- GET(base.uri, query = query.params)
   content <- content(response, "text")
   body.data <- fromJSON(content) #extract and parse

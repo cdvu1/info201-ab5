@@ -39,6 +39,7 @@ my.ui <- navbarPage(
            )
   ),
   tabPanel("Race/Ethnicity in Washington",
+    titlePanel("Race/Ethnicity Data"),
            sidebarLayout(
              sidebarPanel(
                selectInput('school', label = 'School:', choices=sort.state.data[,6]),
