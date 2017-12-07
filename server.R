@@ -5,7 +5,7 @@ library(RColorBrewer)
 
 source("./scripts/financial.R")
 source("./scripts/ethnicity.R")
-#source("./scripts/overview_map.R")
+source("./scripts/overview_map.R")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -13,7 +13,7 @@ shinyServer(function(input, output) {
   #Financial Data Table
   output$finTable <- renderDataTable(GetFinData(input$year))
   #Map of Schools
-  output$map <- renderPlotly ({
+  output$map <- renderPlotly {(
     
     g <- list(
       scope = 'usa',
@@ -24,19 +24,19 @@ shinyServer(function(input, output) {
       countrycolor = toRGB("gray85"),
       countrywidth = 0.5,
       subunitwidth = 0.5
-    )
+      )
     
-    plot.interactive.map <- plot_geo(school.info, lat = ~location.lat, lon = ~location.lng) %>%
+    plot.interactive.map <- plot_geo(school.info, lat = ~location.lat, lon = ~location.lon) %>%
       add_markers(
-        text = ~paste(date, paste('School Name:', school.name), paste('City:', school.city), paste('State:', school.state), paste('Injured:', injured), paste('Casualties:', casualties), sep = "<br />"),
-        color = ~acceptancerate, symbol = I("square"), size = I(6), hoverinfo = "text"
+        text = ~paste(paste('School Name:', school.name), paste('City:', school.city), paste('Acceptance Rate:', 2015.admissions_rate.overall), paste('First Generation Student Percentage:', 2015.student.share_firstgeneration), sep = "<br />"),
+        color = ~2015.student.share_firstgeneration, symbol = I("square"), size = I(4), hoverinfo = "text"
       ) %>%
       colorbar(title = "Acceptance Rate") %>%
       layout(
         title = 'Colleges Across the Country<br />(Hover For More Info)', geo = g
       )
     
-  })
+  )}
   
   output$piechart <- renderPlotly({
     pie.data <- GetRaceData(input$year) %>%
