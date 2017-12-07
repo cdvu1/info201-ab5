@@ -11,10 +11,10 @@ source("./scripts/ethnicity.R")
 shinyServer(function(input, output) {
   
   #Financial Data Table
-  output$finTable <- renderDataTable(GetData(input$year))
+  output$finTable <- renderDataTable(GetFinData(input$year))
   
   #Map of Schools
-  output$map <- renderPlotly {(
+  output$map <- renderPlotly ({
     
   g <- list(
     scope = 'usa',
@@ -37,10 +37,10 @@ shinyServer(function(input, output) {
       title = 'Colleges Across the Country<br />(Hover For More Info)', geo = g
     )
   
-  )}
+  })
   
   output$piechart <- renderPlotly({
-    pie.data <- GetData(input$year) %>%
+    pie.data <- GetRaceData(input$year) %>%
       filter(school.name == input$school)
     row.list <- unname(unlist(pie.data[1,]))
     data.frame(t(row.list))

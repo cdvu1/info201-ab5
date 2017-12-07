@@ -8,7 +8,7 @@ source('api_key.R')
 # 546-552
 # Widgets: school drop-down, year slider
 
-GetData <- function(input.year) {
+GetRaceData <- function(input.year) {
   base.uri <- 'https://api.data.gov/ed/collegescorecard/v1/schools/'
   query.params <- list(api_key = api.key, fields = "school.name", school.state = "WA")
   response <- GET(base.uri, query = query.params)
