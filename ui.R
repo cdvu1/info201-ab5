@@ -41,7 +41,7 @@ my.ui <- navbarPage(
   tabPanel("Race/Ethnicity in Washington",
            sidebarLayout(
              sidebarPanel(
-               selectInput('school', label = 'School:', choices=state.data[,6]),
+               selectInput('school', label = 'School:', choices=sort.state.data[,6]),
                sliderInput("year",
                            "Year",
                            min = 2000,
