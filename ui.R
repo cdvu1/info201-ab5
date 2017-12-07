@@ -1,11 +1,11 @@
 library(shiny)
 library(plotly)
+library(shinythemes)
 
 source("./scripts/ethnicity.R")
 source("./scripts/financial.R")
-source("./scripts/overview_map.R")
 my.ui <- navbarPage(
-  
+  theme = shinytheme('superhero'),
   # Application Title
   "College Data", 
   tabPanel("Home",
@@ -31,8 +31,9 @@ my.ui <- navbarPage(
   tabPanel("Map",
            sidebarLayout(
              sidebarPanel(
+               helpText("Filter colleges across the U.S by acceptance rate"),
                sliderInput("admissions",
-                           "Admissions Rate of Universities",
+                           "Admissions Rate of Universities in the U.S:",
                            min = 0,
                            max = 100,
                            value = 100,
@@ -68,7 +69,7 @@ my.ui <- navbarPage(
        
        # Create a new Row in the UI for selectInputs
        fluidRow(
-         sliderInput("year",
+         sliderInput("fin.year",
                      "Select Year",
                      min = 2000,
                      max = 2015,
@@ -87,13 +88,13 @@ my.ui <- navbarPage(
     mainPanel(
       h1("Project Creators"),
       hr(),
-      a("• Cecilia Vu", href="cdvu@uw.edu"),
+      a("• Cecilia Vu", href="mailto:cdvu@uw.edu"),
       br(),
-      a("• Jody Tran", href="jtranx@uw.edu"),
+      a("• Jody Tran", href="mailto:jtranx@uw.edu"),
       br(),
-      a("• Rachel Vuu", href="rachvuu@uw.edu"),
+      a("• Rachel Vuu", href="mailto:rachvuu@uw.edu"),
       br(),
-      a("• Mark Schteiden", href="mark1026@uw.edu")
+      a("• Mark Schteiden", href="mailto:mark1026@uw.edu")
     )
   )
 )  

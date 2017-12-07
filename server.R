@@ -10,7 +10,7 @@ source("./scripts/ethnicity.R")
 shinyServer(function(input, output) {
   
   #Financial Data Table
-  output$finTable <- renderDataTable(GetFinData(input$year))
+  output$finTable <- renderDataTable(GetFinData(input$fin.year))
   
     #Map of Schools
    output$map <- renderPlotly ({
@@ -35,7 +35,7 @@ shinyServer(function(input, output) {
          text = ~paste(paste('School Name:', name), paste('City:', city), paste('Acceptance Rate:', admissions), paste('First Generation Student Percentage:', firstgen), sep = "<br />"),
          color = ~admissions, symbol = I("square"), size = I(4), hoverinfo = "text"
        ) %>%
-       colorbar(title = "Acceptance Rate") %>%
+       colorbar(title = "Acceptance Rates") %>%
        layout(
          title = 'Colleges Across the Country<br />(Hover For More Info)', geo = g
        )
